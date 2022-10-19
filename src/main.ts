@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 import { context } from '@actions/github';
-import { updateTag, validateIfReleaseIsPublished, postMessageToSlack } from './api-utils';
+import { updateTag, findTag, postMessageToSlack } from './api-utils';
 import { validateSemverVersionFromTag, getMajorTagFromFullTag } from './version-utils';
 
 async function run(): Promise<void> {
@@ -12,7 +12,7 @@ async function run(): Promise<void> {
 
         validateSemverVersionFromTag(sourceTagName);
 
-        await validateIfReleaseIsPublished(sourceTagName, octokitClient);
+        await findTag(sourceTagName, octokitClient);
 
         const majorTag = getMajorTagFromFullTag(sourceTagName);
         await updateTag(sourceTagName, majorTag, octokitClient);

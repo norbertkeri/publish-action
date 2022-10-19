@@ -14,7 +14,7 @@ interface GitRef {
     };
 }
 
-async function findTag(
+export async function findTag(
     tag: string,
     octokitClient: InstanceType<typeof GitHub>
 ): Promise<GitRef | null> {
@@ -23,7 +23,7 @@ async function findTag(
             ...context.repo,
             ref: `tags/${tag}`
         });
-        
+
         return foundTag;
     } catch (err) {
         if (err.status === 404) {

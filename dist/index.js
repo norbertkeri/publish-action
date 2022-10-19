@@ -26,7 +26,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.postMessageToSlack = exports.updateTag = exports.validateIfReleaseIsPublished = void 0;
+exports.postMessageToSlack = exports.updateTag = exports.validateIfReleaseIsPublished = exports.findTag = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const github_1 = __nccwpck_require__(5438);
 const http_client_1 = __nccwpck_require__(9925);
@@ -47,6 +47,7 @@ async function findTag(tag, octokitClient) {
         }
     }
 }
+exports.findTag = findTag;
 async function getTagSHA(tag, octokitClient) {
     const foundTag = await findTag(tag, octokitClient);
     if (!foundTag) {
@@ -143,7 +144,7 @@ async function run() {
         const octokitClient = github.getOctokit(token);
         const sourceTagName = core.getInput('source-tag');
         version_utils_1.validateSemverVersionFromTag(sourceTagName);
-        await api_utils_1.validateIfReleaseIsPublished(sourceTagName, octokitClient);
+        await api_utils_1.findTag(sourceTagName, octokitClient);
         const majorTag = version_utils_1.getMajorTagFromFullTag(sourceTagName);
         await api_utils_1.updateTag(sourceTagName, majorTag, octokitClient);
         core.setOutput('major-tag', majorTag);
