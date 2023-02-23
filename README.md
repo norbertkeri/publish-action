@@ -1,5 +1,10 @@
 # publish-action
 
+This is a fork of https://github.com/actions/publish-action. The only change I have done is that my fork works with tags, and not github releases.
+
+The rest of the README below is copied verbatim from the original readme.
+
+
 **Please note: this action is for internal usage only, issues are disabled and contributing PRs will not be reviewed. We also do not recommend this action for public or production usage while it is still in development.**
 
 This action adds reliability to the new action versions publishing and handles the following cases:
